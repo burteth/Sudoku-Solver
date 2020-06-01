@@ -3,8 +3,8 @@ import Square from './Square'
 
 export default ({items}) => (
 
-  <div className='row'>{items.map(({row, col, key, val}) =>
-    <Square key={key} row={row} col={col} value={val}/>
+  <div className='row'>{items.map(({row, col, id, val}) =>
+    <Square key={id} row={row} col={col} value={val}/>
   )}</div>
 
 )

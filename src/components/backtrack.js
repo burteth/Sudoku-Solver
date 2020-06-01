@@ -1,35 +1,55 @@
 import React from 'react';
 
 
-function backtrack(matrix){
+function backtrack(matrix, solvedDict){
 
-    var animations = [];
 
+    //Move all the values from the matrix over to an array
     var valuesMatrix = [];
     for (var i = 0; i < matrix.length; i++) {
       valuesMatrix.push([])
       for (var j = 0; j < matrix[i].length; j++) {
-        if (matrix[i][j].val === " "){
-            valuesMatrix[i].push(0);
-        }else{
           valuesMatrix[i].push(matrix[i][j].val)
         }
+      }
 
+    // if the array has already been solved then return its solution
+    if ( valuesMatrix in solvedDict ){
+      return solvedDict[valuesMatrix];
+    }
+
+    // replace all " " with 0s
+    for (var h = 0; h < 9; h++) {
+      for (var k = 0; k < 9; k++) {
+        if ( valuesMatrix[h][k] == " " ){
+          valuesMatrix[h][k] = 0;
+        }
       }
     }
 
-
+    // Find the solution
+    var animations = [];
     var start = getNext( valuesMatrix, -1, -1 );
-    sudokuNext( valuesMatrix, start[0], start[1], animations )
-    return(animations)
+    var result = sudokuNext( valuesMatrix, start[0], start[1], animations )
+    if ( result === true ){
+      return(animations)
+    }else{
+      return([])
+    }
+
 }
 export default backtrack;
 
-
 function sudokuNext( board, row, col, animations){
+  //If it seems like this isnt a valid solution then cancel everything
+  if (animations.length > 40000){
+    return false
+  }
 
   for (var i = 1; i < 10; i++) {
+
     if ( isValid( board, row, col, i ) ) {
+
       animations.push(new Animation("increase", row, col, i));
       board[row][col] = i;
       var next = getNext( board , row, col);
@@ -49,7 +69,6 @@ function sudokuNext( board, row, col, animations){
   }
   return false
 }
-
 
 function getNext( board, ignoreRow, ignoreCol ){
 
