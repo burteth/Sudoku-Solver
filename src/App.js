@@ -93,10 +93,33 @@ export default class App extends React.Component {
 
     }
 
-  clearBoard = () => {
+  generateRandomBoard = () => {
     var newBoard = this.generateMatrix(initialFilled, true);
     this.setState({matrix: newBoard});
     this.resetBoard(newBoard);
+  }
+
+  clearBoard = () => {
+    var board =      [[0, 0, 0,  0, 0, 0,  0, 0, 0],
+                      [0, 0, 0,  0, 0, 0,  0, 0, 0],
+                      [0, 0, 0,  0, 0, 0,  0, 0, 0],
+
+                      [0, 0, 0,  0, 0, 0,  0, 0, 0],
+                      [0, 0, 0,  0, 0, 0,  0, 0, 0],
+                      [0, 0, 0,  0, 0, 0,  0, 0, 0],
+
+                      [0, 0, 0,  0, 0, 0,  0, 0, 0],
+                      [0, 0, 0,  0, 0, 0,  0, 0, 0],
+                      [0, 0, 0,  0, 0, 0,  0, 0, 0]]
+    var newMatrix = [];
+    for (var i = 0; i < 9; i++) {
+      newMatrix.push([]);
+      for (var j = 0; j < 9; j++) {
+          newMatrix[i].push({ val : " ", row : i, col : j, id : i * 9 + j });
+      }
+    }
+    this.setState({matrix : newMatrix})
+    this.resetBoard(newMatrix);
   }
 
   resetBoard = (matrix) => {
@@ -120,7 +143,7 @@ export default class App extends React.Component {
     var counter = 0;
     var k = 0;
 
-    var speed = 0 * 3000 / animations.length ;
+    var speed = 5 * 3000 / animations.length ;
 
     var curAnimation;
     var last = 0;
@@ -167,41 +190,40 @@ export default class App extends React.Component {
 
   squareClicked = (row, col) => {
 
-    var iteration = 0
     var tempMatrix = makeMatrixNumerical(this.state.matrix);
-
     var value = this.state.matrix[row][col].val
+    var newVal;
 
-    while (iteration < 9) {
+    if ( value === " "){
+      this.state.matrix[row][col].val = 1;
+      newVal = 1;
 
-      if ( value === " "){
-        if ( isValid(tempMatrix, row, col, 1) ){
-          this.state.matrix[row][col].val = 1;
-          break;
-        }else{
-          value = 1;
-          iteration += 1
-        }
+    }else if ( value === 9 ){
+      this.state.matrix[row][col].val = " ";
+      newVal = 0;
+    }else{
+      this.state.matrix[row][col].val = parseInt( value,10 ) + 1;
+      newVal = parseInt( value, 10 ) + 1;
+    }
+    tempMatrix[row][col] = newVal;
 
-      }else if ( value === 9 ){
-        this.state.matrix[row][col].val = " ";
-        break;
-      }
-
-      if ( isValid(tempMatrix, row, col, value + 1) ){
-          this.state.matrix[row][col].val = parseInt(value,10) + 1;
-          break;
-        }
-
-      value += 1
-      iteration += 1;
-
-      }
-      this.resetBoard(this.state.matrix);
+    var invalidCordList = getInvalid(tempMatrix);
+    var invalidIndexList = [];
+    for (var i = 0; i < invalidCordList.length; i++) {
+      invalidIndexList.push(invalidCordList[i][0] * 9 + invalidCordList[i][1]);
     }
 
 
-
+    var squares = document.getElementsByClassName("square");
+    for (var i = 0; i < 81; i++) {
+      if ( invalidIndexList.includes(i) ){
+        squares[i].style.backgroundColor = "red";
+      }else{
+        squares[i].style.backgroundColor = "white";
+      }
+    }
+    this.resetBoard(this.state.matrix);
+    }
 
 
 
@@ -210,7 +232,8 @@ export default class App extends React.Component {
     return(<div id="solver">
       <div id="header">
           <button onClick={() => this.updateBoard(backtrack(JSON.parse(JSON.stringify(this.state.matrix)), this.state.solved))}>Solve</button>
-          <button onClick={() => this.clearBoard()}>Clear</button>
+          <button onClick={() => this.clearBoard()}>Clear Board</button>
+          <button onClick={() => this.generateRandomBoard()}>Generate Random Board</button>
         </div>
 
       <div id="boardContainer">
@@ -235,14 +258,14 @@ function isValid(board, rowNum, colNum, number){
 
   //Check Row
   for (var i = 0; i < 9; i++) {
-    if ( board[rowNum][i] === number ){
+    if ( board[rowNum][i] === number && i !== colNum ){
       return false
     }
   }
 
   //Check Col
-  for (var i = 0; i < 9; i++) {
-    if ( board[i][colNum] === number ){
+  for (var j = 0; j < 9; j++) {
+    if ( board[j][colNum] === number  && j !== rowNum){
       return false
     }
   }
@@ -255,7 +278,7 @@ function isValid(board, rowNum, colNum, number){
 
   for (var row = quadRow; row < quadRow + 3; row++) {
     for (var col = quadCol; col < quadCol + 3; col++) {
-      if ( board[row][col] === number ){
+      if ( board[row][col] === number  && row !== rowNum && col !== colNum){
         return false
       }
     }
@@ -264,6 +287,20 @@ function isValid(board, rowNum, colNum, number){
   return true
 
 
+}
+
+function getInvalid(board){
+
+  var invalidList = [];
+
+  for (var i = 0; i < 9; i++) {
+    for (var j = 0; j < 9; j++) {
+        if ( board[i][j] !== 0 && !isValid(board, i, j, board[i][j] ) ){
+          invalidList.push([i,j]);
+        }
+    }
+  }
+  return invalidList;
 }
 
 function makeMatrixNumerical( matrix ){
@@ -282,3 +319,42 @@ function makeMatrixNumerical( matrix ){
   }
   return newMatrix;
 }
+
+
+
+/*
+ * squareClicked = (row, col) => {
+
+   var iteration = 0
+   var tempMatrix = makeMatrixNumerical(this.state.matrix);
+
+   var value = this.state.matrix[row][col].val
+
+   while (iteration < 9) {
+
+     if ( value === " "){
+       if ( isValid(tempMatrix, row, col, 1) ){
+         this.state.matrix[row][col].val = 1;
+         break;
+       }else{
+         value = 1;
+         iteration += 1
+       }
+
+     }else if ( value === 9 ){
+       this.state.matrix[row][col].val = " ";
+       break;
+     }
+
+     if ( isValid(tempMatrix, row, col, value + 1) ){
+         this.state.matrix[row][col].val = parseInt(value,10) + 1;
+         break;
+       }
+
+     value += 1
+     iteration += 1;
+
+     }
+     this.resetBoard(this.state.matrix);
+   }
+ */
