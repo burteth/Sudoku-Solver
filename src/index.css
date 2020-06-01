@@ -3,21 +3,86 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+    background-color: #cad2d9;
+}
+
+button:focus{
+  outline: None;
 }
 
 #solver {
+  display: flex;
+  flex-direction: column;
 
   margin-left: auto;
   margin-right: auto;
   height: 80vh;
-  background-color: grey;
-  text-align: center;
 
 }
-#boardContainer{
-  width: auto;
+
+#header{
+  text-align: center;
+  padding: 1em;
+
 }
+#header button{
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-top: .6em;
+  padding-bottom: .6em;
+
+  border: solid black 1px;
+  border-radius: 25%;
+
+}
+#header button:active{
+  background-color: black;
+  color: white;
+  border-color: white;
+}
+
+
+#boardContainer{
+  flex-direction: column;
+  align-self: center;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  border: solid black 10px;
+
+}
+
+
+
+.row {
+  display: flex;
+  flex-direction: row;
+
+
+}
+
 .square {
+  text-align: center;
+
   font-size: 2em;
-  background-color: green;
+  background-color: white;
+  width: 1.5em;
+  height: 1.5em;
+  #margin: .2em;
+  border: solid black 2px;
+
+}
+
+.horizontalBar{
+  width: 100%;
+  height: 10px;
+  background-color: black;
+
+}
+
+.verticalBar{
+  height: inherit;
+  width: 10px;
+  background-color: black;
 }

@@ -5,9 +5,7 @@ import App from './App';
 
 
 ReactDOM.render(
-  <div id="solver">
-  <App />
-</div>,
+  <App />,
 
   document.getElementById('root')
 );

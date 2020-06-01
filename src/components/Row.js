@@ -1,7 +1,15 @@
-/*import React from 'react';
-import Square from './Square'*/
+import React from 'react';
+import Square from './Square'
 
+export default ({items}) => (
 
+  <div className='row'>{items.map(({row, col, key, val}) =>
+    <Square key={key} row={row} col={col} value={val}/>
+  )}</div>
+
+)
+
+/*
 function Rows(items){
 
   var row = Array();
@@ -12,7 +20,8 @@ function Rows(items){
 }
 
 export default Rows;
-/*
+
+
 export default ({items}) => (
   console.log(items),
 
