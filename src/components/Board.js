@@ -11,7 +11,7 @@ function Board(props) {
       counter = 0
       rows.push(<div className="horizontalBar"></div>)
     }
-    rows.push( <Row items = {matrix[i]} key={i} />)
+    rows.push( <Row items = {matrix[i]} key={i} updateFunction={props.updateFunction} />)
     counter = counter + 1
 
   }

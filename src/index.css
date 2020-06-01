@@ -86,3 +86,7 @@ button:focus{
   width: 10px;
   background-color: black;
 }
+
+#fakeInput{
+  display: none;
+}

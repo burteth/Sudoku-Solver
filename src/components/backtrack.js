@@ -3,7 +3,6 @@ import React from 'react';
 
 function backtrack(matrix, solvedDict){
 
-
     //Move all the values from the matrix over to an array
     var valuesMatrix = [];
     for (var i = 0; i < matrix.length; i++) {
@@ -19,12 +18,18 @@ function backtrack(matrix, solvedDict){
     }
 
     // replace all " " with 0s
+    var complete = false;
     for (var h = 0; h < 9; h++) {
       for (var k = 0; k < 9; k++) {
         if ( valuesMatrix[h][k] == " " ){
+          complete = true;
           valuesMatrix[h][k] = 0;
         }
       }
+    }
+
+    if (!complete){
+      return([])
     }
 
     // Find the solution
@@ -47,7 +52,6 @@ function sudokuNext( board, row, col, animations){
   }
 
   for (var i = 1; i < 10; i++) {
-
     if ( isValid( board, row, col, i ) ) {
 
       animations.push(new Animation("increase", row, col, i));
@@ -129,7 +133,8 @@ class Animation {
     this.type = type;
     this.row = row;
     this.col = col;
-    this.val = number
+    this.val = number;
+    this.index = 9 * row + col;
 
   }
 }

@@ -16,8 +16,10 @@ export default class App extends React.Component {
     };
 
   }
+
   componentDidMount() {
     this.generateMatrix = this.generateMatrix.bind(this);
+    this.squareClicked = this.squareClicked.bind(this);
     }
 
   generateMatrix = (filled, started) => {
@@ -33,7 +35,6 @@ export default class App extends React.Component {
                         [0, 6, 0,  0, 0, 0,  2, 8, 0],
                         [0, 0, 0,  4, 1, 9,  0, 0, 5],
                         [0, 0, 0,  0, 8, 0,  0, 7, 9]]
-
         var board =      [[0, 0, 0,  0, 0, 0,  0, 0, 0],
                           [0, 0, 0,  0, 0, 0,  0, 0, 0],
                           [0, 0, 0,  0, 0, 0,  0, 0, 0],
@@ -93,8 +94,9 @@ export default class App extends React.Component {
     }
 
   clearBoard = () => {
-    this.setState({matrix: this.generateMatrix(initialFilled, true)});
-    this.resetBoard(this.state.matrix)
+    var newBoard = this.generateMatrix(initialFilled, true);
+    this.setState({matrix: newBoard});
+    this.resetBoard(newBoard);
   }
 
   resetBoard = (matrix) => {
@@ -112,14 +114,13 @@ export default class App extends React.Component {
   updateBoard = (animations) => {
 
     this.state.solved = {};
-
     this.timeouts = [];
 
     var squares = document.getElementsByClassName("square");
     var counter = 0;
     var k = 0;
 
-    var speed = 5 * 3000 / animations.length ;
+    var speed = 0 * 3000 / animations.length ;
 
     var curAnimation;
     var last = 0;
@@ -136,34 +137,72 @@ export default class App extends React.Component {
           last.style.backgroundColor = "white"
         }
 
+        index = curAnimation.index;
         if ( curAnimation.type === "increase" ){
-            index = getIndex(curAnimation.row, curAnimation.col);
+
             squares[index].style.backgroundColor = "green";
             squares[index].innerText = curAnimation.val;
             last = squares[index]
         }else{
-          index = getIndex(curAnimation.row, curAnimation.col);
+
           squares[index].style.backgroundColor = "red";
           squares[index].innerText = " ";
           last = squares[index]
         }
         if ( k === animations.length - 1 ){
           last.style.backgroundColor = "white"
+
+          for (var row = 0; row < 9; row++) {
+            for (var col = 0; col < 9; col++) {
+              this.state.matrix[row][col].val = parseInt(squares[getIndex(row,col)].innerText, 10);
+            }
+          }
         }
 
         k++;
       }, counter * speed));
       counter++;
     };
+  }
 
-    for (var row = 0; row < 9; row++) {
-      for (var col = 0; col < 9; col++) {
-        this.state.matrix[row][col].val = squares[getIndex(row,col)].innerText
+  squareClicked = (row, col) => {
+
+    var iteration = 0
+    var tempMatrix = makeMatrixNumerical(this.state.matrix);
+
+    var value = this.state.matrix[row][col].val
+
+    while (iteration < 9) {
+
+      if ( value === " "){
+        if ( isValid(tempMatrix, row, col, 1) ){
+          this.state.matrix[row][col].val = 1;
+          break;
+        }else{
+          value = 1;
+          iteration += 1
+        }
+
+      }else if ( value === 9 ){
+        this.state.matrix[row][col].val = " ";
+        break;
       }
+
+      if ( isValid(tempMatrix, row, col, value + 1) ){
+          this.state.matrix[row][col].val = parseInt(value,10) + 1;
+          break;
+        }
+
+      value += 1
+      iteration += 1;
+
+      }
+      this.resetBoard(this.state.matrix);
     }
 
 
-  }
+
+
 
 
   render() {
@@ -175,7 +214,7 @@ export default class App extends React.Component {
         </div>
 
       <div id="boardContainer">
-        <Board matrix={this.state.matrix}/>
+        <Board matrix={this.state.matrix} updateFunction={this.squareClicked}/>
       </div>
     </div>
     );
@@ -225,4 +264,21 @@ function isValid(board, rowNum, colNum, number){
   return true
 
 
+}
+
+function makeMatrixNumerical( matrix ){
+
+  var newMatrix = []
+
+  for (var i = 0; i < 9; i++) {
+    newMatrix.push([])
+    for (var j = 0; j < 9; j++) {
+      if ( matrix[i][j].val == " " ){
+        newMatrix[i][j] = 0
+      }else{
+        newMatrix[i][j] = matrix[i][j].val
+      }
+    }
+  }
+  return newMatrix;
 }

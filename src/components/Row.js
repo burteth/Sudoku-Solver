@@ -1,34 +1,10 @@
 import React from 'react';
 import Square from './Square'
 
-export default ({items}) => (
+export default ({items, updateFunction}) => (
 
   <div className='row'>{items.map(({row, col, id, val}) =>
-    <Square key={id} row={row} col={col} value={val}/>
+    <Square key={id} row={row} col={col} value={val} updateFunction={updateFunction}/>
   )}</div>
 
 )
-
-/*
-function Rows(items){
-
-  var row = Array();
-  for (var i = 0; i < items.length; i++) {
-    row.push(items[i]);
-  }
-  return row;
-}
-
-export default Rows;
-
-
-export default ({items}) => (
-  console.log(items),
-
-  <div id='row'>
-    {items.map(
-      ({val}) => <Square value = {val}/>
-    )}
-  </div>
-)
-*/

@@ -1,13 +1,11 @@
 import React from 'react';
 
 function Square(props) {
+  var test = [];
+  test.push(<div className="square" onClick={() => props.updateFunction(props.row,props.col,0)}>{props.value}</div>);
   if ( ( (props.col + 1) % 3) === 0 && props.col !== 8) {
-    var test = [];
-    test.push(<div className="square">{props.value}</div>);
     test.push(<div className="verticalBar"></div>);
-    return test
-  }else{
-    return <div className="square">{props.value}</div>;
   }
+  return test
 }
 export default Square
