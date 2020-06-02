@@ -4,7 +4,12 @@ import Board from "./components/Board.js"
 import backtrack from "./components/backtrack.js"
 //import Square from "./components/Square.js"
 
-var initialFilled = 27;
+const initialFilled = 27;
+const squareBackgroundColor = "#E9E9E9";
+const speed_max = 200;
+const speed_min = 10;
+
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -20,6 +25,8 @@ export default class App extends React.Component {
   componentDidMount() {
     this.generateMatrix = this.generateMatrix.bind(this);
     this.squareClicked = this.squareClicked.bind(this);
+    this.timeouts = [];
+    this.currentanimations = [];
     }
 
   generateMatrix = (filled, started) => {
@@ -96,7 +103,8 @@ export default class App extends React.Component {
   generateRandomBoard = () => {
     var newBoard = this.generateMatrix(initialFilled, true);
     this.setState({matrix: newBoard});
-    this.resetBoard(newBoard);
+    this.stopCurrentSolution();
+    this.resetBoard(newBoard,true);
   }
 
   clearBoard = () => {
@@ -119,15 +127,19 @@ export default class App extends React.Component {
       }
     }
     this.setState({matrix : newMatrix})
-    this.resetBoard(newMatrix);
+    this.stopCurrentSolution();
+    this.resetBoard(newMatrix, true);
   }
 
-  resetBoard = (matrix) => {
+  resetBoard = (matrix, ifColor) => {
 
     var squares = document.getElementsByClassName("square");
     for (var i = 0; i < matrix.length; i++) {
       for (var j = 0; j < matrix[i].length; j++) {
         squares[ i*9 + j ].innerText = matrix[i][j].val;
+        if (ifColor) {
+          squares[ i*9 + j ].style.backgroundColor = squareBackgroundColor;
+        }
       }
     }
 
@@ -136,15 +148,16 @@ export default class App extends React.Component {
 
   updateBoard = (animations) => {
 
+    this.stopCurrentSolution();
+
     this.state.solved = {};
     this.timeouts = [];
 
     var squares = document.getElementsByClassName("square");
     var counter = 0;
     var k = 0;
-
-    var speed = 5 * 3000 / animations.length ;
-
+    //var speed = Math.abs((((-1 * (document.getElementById("speedrange").value)) * speed_max / 100.0) + speed_max));
+    var speed = ( (-1 * ( (document.getElementById("speedrange").value - speed_min) / (speed_max - speed_min) ) ) + 1  ) * 20000 / animations.length ;
     var curAnimation;
     var last = 0;
     var index = 0;
@@ -157,7 +170,7 @@ export default class App extends React.Component {
         curAnimation = animations[k];
 
         if (last !== 0){
-          last.style.backgroundColor = "white"
+          last.style.backgroundColor = squareBackgroundColor;
         }
 
         index = curAnimation.index;
@@ -173,7 +186,7 @@ export default class App extends React.Component {
           last = squares[index]
         }
         if ( k === animations.length - 1 ){
-          last.style.backgroundColor = "white"
+          last.style.backgroundColor = squareBackgroundColor
 
           for (var row = 0; row < 9; row++) {
             for (var col = 0; col < 9; col++) {
@@ -189,6 +202,8 @@ export default class App extends React.Component {
   }
 
   squareClicked = (row, col) => {
+
+    this.stopCurrentSolution();
 
     var tempMatrix = makeMatrixNumerical(this.state.matrix);
     var value = this.state.matrix[row][col].val
@@ -219,27 +234,50 @@ export default class App extends React.Component {
       if ( invalidIndexList.includes(i) ){
         squares[i].style.backgroundColor = "red";
       }else{
-        squares[i].style.backgroundColor = "white";
+        squares[i].style.backgroundColor = squareBackgroundColor;
       }
     }
-    this.resetBoard(this.state.matrix);
+    this.resetBoard(this.state.matrix, false);
     }
 
-
+  stopCurrentSolution = () => {
+    //Clear all timeouts
+    for (var i = 0; i < this.timeouts.length; i++) {
+      clearTimeout(this.timeouts[i]);
+    }
+}
 
   render() {
 
-    return(<div id="solver">
-      <div id="header">
-          <button onClick={() => this.updateBoard(backtrack(JSON.parse(JSON.stringify(this.state.matrix)), this.state.solved))}>Solve</button>
-          <button onClick={() => this.clearBoard()}>Clear Board</button>
-          <button onClick={() => this.generateRandomBoard()}>Generate Random Board</button>
+    return (
+      <div id="UI_container">
+        <div className="header">
+          <div id="banner">
+            <h1>Sudoku Solver Visualization</h1>
+          </div>
+
+        </div>
+        <div id="button_container">
+          <div>
+
+          <button className="control_button" onClick={() => this.clearBoard()}>Clear</button>
+          <button className="control_button" onClick={() => this.generateRandomBoard()}>Randomize</button>
+
+          <div id="range_container">
+            <div className="data_header">Solving Speed:</div>
+            <input type="range" className="slider" id="speedrange" min={speed_min} max={speed_max} defaultValue='50'></input>
+          </div>
+        </div>
+          <button className="control_button solve" onClick={() => this.updateBoard(backtrack(JSON.parse(JSON.stringify(this.state.matrix)), this.state.solved))}>Solve</button>
         </div>
 
-      <div id="boardContainer">
-        <Board matrix={this.state.matrix} updateFunction={this.squareClicked}/>
+          <div id="boardContainerOuter">
+            <div id="boardContainer">
+              <Board matrix={this.state.matrix} updateFunction={this.squareClicked}/>
+              </div>
+          </div>
       </div>
-    </div>
+
     );
   }
 }
@@ -358,3 +396,33 @@ function makeMatrixNumerical( matrix ){
      this.resetBoard(this.state.matrix);
    }
  */
+
+
+/*<div className="bars_and_data">
+
+  <div id="interfaceOuter">
+    <div id="interfaceInner">
+
+
+
+      <div className="control_button_container">
+
+
+      </div>
+
+      <div id="range_container">
+
+        <div className="data_header">Solving Speed</div>
+        <input type="range" className="slider" id="speedrange" min="10" max="200" defaultValue='50'></input>
+
+      </div>
+
+    </div>
+  </div>
+  <div id="boardContainerOuter">
+    <div id="boardContainer">
+      <Board matrix={this.state.matrix} updateFunction={this.squareClicked}/>
+      </div>
+  </div>
+</div>
+</div>*/
