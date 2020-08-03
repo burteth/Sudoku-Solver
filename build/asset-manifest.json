@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/Sudoko-Solver/static/css/main.33faa355.chunk.css",
-    "main.js": "/Sudoko-Solver/static/js/main.674d2447.chunk.js",
-    "main.js.map": "/Sudoko-Solver/static/js/main.674d2447.chunk.js.map",
-    "runtime-main.js": "/Sudoko-Solver/static/js/runtime-main.17b2863b.js",
-    "runtime-main.js.map": "/Sudoko-Solver/static/js/runtime-main.17b2863b.js.map",
-    "static/js/2.023b9cb3.chunk.js": "/Sudoko-Solver/static/js/2.023b9cb3.chunk.js",
-    "static/js/2.023b9cb3.chunk.js.map": "/Sudoko-Solver/static/js/2.023b9cb3.chunk.js.map",
-    "index.html": "/Sudoko-Solver/index.html",
-    "precache-manifest.22ec24c72422b5e00a310ad4afee814b.js": "/Sudoko-Solver/precache-manifest.22ec24c72422b5e00a310ad4afee814b.js",
-    "service-worker.js": "/Sudoko-Solver/service-worker.js",
-    "static/css/main.33faa355.chunk.css.map": "/Sudoko-Solver/static/css/main.33faa355.chunk.css.map",
-    "static/js/2.023b9cb3.chunk.js.LICENSE.txt": "/Sudoko-Solver/static/js/2.023b9cb3.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/Sudoko-Solver/static/media/CircularStd-MediumItalic.df2ef3fc.woff"
+    "main.css": "/Sudoku-Solver/static/css/main.c65565ed.chunk.css",
+    "main.js": "/Sudoku-Solver/static/js/main.674d2447.chunk.js",
+    "main.js.map": "/Sudoku-Solver/static/js/main.674d2447.chunk.js.map",
+    "runtime-main.js": "/Sudoku-Solver/static/js/runtime-main.20957e55.js",
+    "runtime-main.js.map": "/Sudoku-Solver/static/js/runtime-main.20957e55.js.map",
+    "static/js/2.023b9cb3.chunk.js": "/Sudoku-Solver/static/js/2.023b9cb3.chunk.js",
+    "static/js/2.023b9cb3.chunk.js.map": "/Sudoku-Solver/static/js/2.023b9cb3.chunk.js.map",
+    "index.html": "/Sudoku-Solver/index.html",
+    "precache-manifest.ce06c9c449aee874e3aa6fa7c1ce60a9.js": "/Sudoku-Solver/precache-manifest.ce06c9c449aee874e3aa6fa7c1ce60a9.js",
+    "service-worker.js": "/Sudoku-Solver/service-worker.js",
+    "static/css/main.c65565ed.chunk.css.map": "/Sudoku-Solver/static/css/main.c65565ed.chunk.css.map",
+    "static/js/2.023b9cb3.chunk.js.LICENSE.txt": "/Sudoku-Solver/static/js/2.023b9cb3.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/Sudoku-Solver/static/media/CircularStd-Book.3d25cc45.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.17b2863b.js",
+    "static/js/runtime-main.20957e55.js",
     "static/js/2.023b9cb3.chunk.js",
-    "static/css/main.33faa355.chunk.css",
+    "static/css/main.c65565ed.chunk.css",
     "static/js/main.674d2447.chunk.js"
   ]
 }
