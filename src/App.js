@@ -2,7 +2,8 @@ import React from 'react';
 import './App.css';
 import Board from "./components/Board.js"
 import backtrack from "./components/backtrack.js"
-//import Square from "./components/Square.js"
+
+ /* eslint-disable */
 
 const initialFilled = 27;
 const squareBackgroundColor = "#E9E9E9";
@@ -31,17 +32,6 @@ export default class App extends React.Component {
 
   generateMatrix = (filled, started) => {
 
-        var initial =  [[5, 3, 0,  0, 7, 0,  0, 0, 0],
-                        [6, 0, 0,  1, 0, 5,  0, 0, 0],
-                        [0, 9, 8,  0, 0, 0,  0, 6, 0],
-
-                        [0, 0, 0,  0, 6, 0,  0, 0, 3],
-                        [4, 0, 0,  8, 0, 0,  0, 0, 1],
-                        [7, 0, 0,  0, 2, 0,  0, 0, 0],
-
-                        [0, 6, 0,  0, 0, 0,  2, 8, 0],
-                        [0, 0, 0,  4, 1, 9,  0, 0, 5],
-                        [0, 0, 0,  0, 8, 0,  0, 7, 9]]
         var board =      [[0, 0, 0,  0, 0, 0,  0, 0, 0],
                           [0, 0, 0,  0, 0, 0,  0, 0, 0],
                           [0, 0, 0,  0, 0, 0,  0, 0, 0],
@@ -75,17 +65,18 @@ export default class App extends React.Component {
         for (var i = 0; i < 9; i++) {
           newMatrix.push([])
           for (var j = 0; j < 9; j++) {
-            if ( board[i][j] == 0 ){
+            if ( board[i][j] === 0 ){
               newMatrix[i].push({ val : " ", row : i, col : j, id : i * 9 + j })
             }else{
               newMatrix[i].push({ val : board[i][j], row : i, col : j, id : i * 9 + j })
             }
           }
         }
+        var solution;
         if (started) {
-          var solution = backtrack(newMatrix, this.state.solved);
+          solution = backtrack(newMatrix, this.state.solved);
         }else{
-          var solution = backtrack(newMatrix, {});
+          solution = backtrack(newMatrix, {});
         }
 
         if ( solution.length !== 0 ){
@@ -108,17 +99,6 @@ export default class App extends React.Component {
   }
 
   clearBoard = () => {
-    var board =      [[0, 0, 0,  0, 0, 0,  0, 0, 0],
-                      [0, 0, 0,  0, 0, 0,  0, 0, 0],
-                      [0, 0, 0,  0, 0, 0,  0, 0, 0],
-
-                      [0, 0, 0,  0, 0, 0,  0, 0, 0],
-                      [0, 0, 0,  0, 0, 0,  0, 0, 0],
-                      [0, 0, 0,  0, 0, 0,  0, 0, 0],
-
-                      [0, 0, 0,  0, 0, 0,  0, 0, 0],
-                      [0, 0, 0,  0, 0, 0,  0, 0, 0],
-                      [0, 0, 0,  0, 0, 0,  0, 0, 0]]
     var newMatrix = [];
     for (var i = 0; i < 9; i++) {
       newMatrix.push([]);
@@ -273,7 +253,7 @@ export default class App extends React.Component {
 
           <div id="boardContainerOuter">
             <div id="boardContainer">
-              <Board matrix={this.state.matrix} updateFunction={this.squareClicked}/>
+              <Board key={"Board"} matrix={this.state.matrix} updateFunction={this.squareClicked}/>
               </div>
           </div>
       </div>

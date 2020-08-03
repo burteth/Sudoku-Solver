@@ -1,5 +1,3 @@
-import React from 'react';
-
 
 function backtrack(matrix, solvedDict){
 
@@ -21,7 +19,7 @@ function backtrack(matrix, solvedDict){
     var complete = false;
     for (var h = 0; h < 9; h++) {
       for (var k = 0; k < 9; k++) {
-        if ( valuesMatrix[h][k] == " " ){
+        if ( valuesMatrix[h][k] === " " ){
           complete = true;
           valuesMatrix[h][k] = 0;
         }
@@ -100,7 +98,7 @@ function isValid(board, rowNum, colNum, number){
   }
 
   //Check Col
-  for (var i = 0; i < 9; i++) {
+  for (i = 0; i < 9; i++) {
     if ( board[i][colNum] === number ){
       return false
     }

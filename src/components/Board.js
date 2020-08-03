@@ -9,9 +9,9 @@ function Board(props) {
   for (var i = 0; i < matrix.length; i++) {
     if (counter === 3){
       counter = 0
-      rows.push(<div className="horizontalBar"></div>)
+      rows.push(<div key={"HorizontalBar #".concat((Math.floor(i / 3).toString()))} className="horizontalBar"></div>)
     }
-    rows.push( <Row items = {matrix[i]} key={i} updateFunction={props.updateFunction} />)
+    rows.push( <Row items = {matrix[i]} key={"Row: ".concat(i.toString())} updateFunction={props.updateFunction} />)
     counter = counter + 1
 
   }
