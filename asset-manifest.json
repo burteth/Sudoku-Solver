@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Sudoko-Solver/static/css/main.33faa355.chunk.css",
+    "main.css": "/Sudoko-Solver/static/css/main.ea36a836.chunk.css",
     "main.js": "/Sudoko-Solver/static/js/main.674d2447.chunk.js",
     "main.js.map": "/Sudoko-Solver/static/js/main.674d2447.chunk.js.map",
     "runtime-main.js": "/Sudoko-Solver/static/js/runtime-main.17b2863b.js",
@@ -8,16 +8,16 @@
     "static/js/2.023b9cb3.chunk.js": "/Sudoko-Solver/static/js/2.023b9cb3.chunk.js",
     "static/js/2.023b9cb3.chunk.js.map": "/Sudoko-Solver/static/js/2.023b9cb3.chunk.js.map",
     "index.html": "/Sudoko-Solver/index.html",
-    "precache-manifest.1bda001ac2d555d2b69775c5bf8fd86e.js": "/Sudoko-Solver/precache-manifest.1bda001ac2d555d2b69775c5bf8fd86e.js",
+    "precache-manifest.0455e797d50224ca773ba010a29f9f99.js": "/Sudoko-Solver/precache-manifest.0455e797d50224ca773ba010a29f9f99.js",
     "service-worker.js": "/Sudoko-Solver/service-worker.js",
-    "static/css/main.33faa355.chunk.css.map": "/Sudoko-Solver/static/css/main.33faa355.chunk.css.map",
+    "static/css/main.ea36a836.chunk.css.map": "/Sudoko-Solver/static/css/main.ea36a836.chunk.css.map",
     "static/js/2.023b9cb3.chunk.js.LICENSE.txt": "/Sudoko-Solver/static/js/2.023b9cb3.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/Sudoko-Solver/static/media/CircularStd-MediumItalic.df2ef3fc.woff"
+    "static/media/index.css": "/Sudoko-Solver/static/media/CircularStd-Book.3d25cc45.woff"
   },
   "entrypoints": [
     "static/js/runtime-main.17b2863b.js",
     "static/js/2.023b9cb3.chunk.js",
-    "static/css/main.33faa355.chunk.css",
+    "static/css/main.ea36a836.chunk.css",
     "static/js/main.674d2447.chunk.js"
   ]
 }
