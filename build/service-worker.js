@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Sudoku-Solver/precache-manifest.ce06c9c449aee874e3aa6fa7c1ce60a9.js"
+  "/Sudoku-Solver/precache-manifest.3001cc8efd5c1f1c173e53e4a77adeb1.js"
 );
 
 self.addEventListener('message', (event) => {
